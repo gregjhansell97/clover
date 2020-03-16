@@ -7,7 +7,7 @@ from kivy.uix.button import Button
 from kivy.graphics import Color, Line, Rectangle
 from kivy.clock import Clock
 
-class GrabableRectangle(Rectangle):
+class GrabbableRectangle(Rectangle):
     def __init__(self, *args, **kwargs):
         super().__init__(
                 *args, 
@@ -38,31 +38,31 @@ class GrabableRectangle(Rectangle):
 class World(Widget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.leo = GrabableRectangle(
+        self.leo = GrabbableRectangle(
                 source="leo.png",
                 pos=(300, 300),
                 size=(100.0, 100.0))
-        self.gold = GrabableRectangle(
+        self.gold = GrabbableRectangle(
                 source="gold.png",
                 pos=(50, 50),
                 size=(200.0, 200.0))
-        self.grabable = [self.leo, self.gold]
-        for g in self.grabable[::-1]:
+        self.grabbable = [self.leo, self.gold]
+        for g in self.grabbable[::-1]:
             self.canvas.add(g)
         self.canvas.ask_update()
 
     def on_touch_up(self, touch):
-        for g in self.grabable:
+        for g in self.grabbable:
             g.release()
 
     def on_touch_down(self, touch):
-        for g in self.grabable:
+        for g in self.grabbable:
             g.grab(touch)
             if g.grabbed:
                 break # only one item can be grabbed at a time
 
     def on_touch_move(self, touch):
-        for g in self.grabable:
+        for g in self.grabbable:
             g.move((touch.x, touch.y))
 
 class LeprechaunApp(App):
